@@ -1,0 +1,54 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "ge_molsg"
+version = "0.1.0"
+description = "WKS surface descriptors with a graph-Laplacian spectral embedding."
+readme = "README.md"
+requires-python = ">=3.9"
+license = { text = "MIT" }
+authors = [{ name = "GE-MolSG contributors" }]
+classifiers = [
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Intended Audience :: Science/Research",
+    "Topic :: Scientific/Engineering :: Chemistry",
+]
+dependencies = [
+    "numpy>=1.24",
+    "scipy>=1.10",
+    "scikit-learn>=1.3",
+]
+
+[project.optional-dependencies]
+progress = ["tqdm>=4.65"]
+dev = [
+    "pytest>=8.0",
+    "coverage[toml]>=7.4",
+]
+
+[project.urls]
+Repository = "https://github.com/your-org/ge_molsg"
+
+[project.scripts]
+ge_molsg = "ge_molsg.__main__:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+ge_molsg = ["py.typed"]
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+testpaths = ["tests"]
+
+[tool.coverage.run]
+branch = true
+source = ["ge_molsg"]
+
+[tool.coverage.report]
+show_missing = true
