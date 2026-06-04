@@ -38,7 +38,7 @@ def knn_histogram(
 def soft_bof(
     descriptors: np.ndarray, codebook: np.ndarray, tau: float
 ) -> np.ndarray:
-    """Fully-soft BoF with temperature ``tau``. L1-normalized histogram."""
+    """Fully-soft BoF with temperature ``tau``. L1-normalised histogram."""
     descriptors = np.nan_to_num(descriptors, nan=0.0, posinf=0.0, neginf=0.0)
     z_sq = (descriptors ** 2).sum(axis=1, keepdims=True)
     e_sq = (codebook ** 2).sum(axis=1)

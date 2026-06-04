@@ -1,4 +1,4 @@
-"""Pluggable Euclidean k-nearest-neighbor backends.
+"""Pluggable Euclidean k-nearest-neighbour backends.
 
 Each backend maps ``(points, k) -> (indices, distances)`` with self-matches
 removed, so graph construction is independent of the search implementation. The
@@ -57,7 +57,7 @@ def make_sklearn_backend(algorithm: str = "auto", n_jobs: int = 1) -> NeighborBa
     algorithm : {'auto', 'ball_tree', 'kd_tree', 'brute'}, default 'auto'
         Search algorithm passed to ``sklearn.neighbors.NearestNeighbors``.
     n_jobs : int, default 1
-        Worker threads for the neighbor query.
+        Worker threads for the neighbour query.
     """
 
     def _backend(points: np.ndarray, k: int):

@@ -1,7 +1,7 @@
 """GE-MolSG: WKS surface descriptors with a graph-Laplacian spectral embedding.
 
 The graph Laplacian whose bottom spectrum feeds the Wave Kernel Signature is
-built with scipy: an adaptive-bandwidth Euclidean affinity matrix, a normalized
+built with scipy: an adaptive-bandwidth Euclidean affinity matrix, a normalised
 Laplacian, and the bottom eigenpairs with the trivial mode dropped. The
 neighbor search is pluggable (scikit-learn by default).
 
@@ -35,6 +35,7 @@ from ge_molsg.descriptor import (
 from ge_molsg.codebook import (
     build_codebook,
     sample_descriptor_pool,
+    subsample_descriptors,
     farthest_point_sample,
 )
 from ge_molsg.bof import knn_histogram, soft_bof
@@ -51,7 +52,7 @@ __all__ = [
     # surface
     "MolSurface",
     "load_surface_npy",
-    # neighbors
+    # neighbours
     "get_neighbor_backend",
     "make_ckdtree_backend",
     "make_sklearn_backend",
@@ -73,6 +74,7 @@ __all__ = [
     # codebook
     "build_codebook",
     "sample_descriptor_pool",
+    "subsample_descriptors",
     "farthest_point_sample",
     # bof
     "knn_histogram",

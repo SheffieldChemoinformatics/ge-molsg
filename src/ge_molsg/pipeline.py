@@ -14,7 +14,7 @@ import numpy as np
 
 from .surface import MolSurface
 from .descriptor import GEMolSGConfig, compute_wks, compute_wks_batch
-from .codebook import build_codebook, sample_descriptor_pool
+from .codebook import build_codebook, sample_descriptor_pool, subsample_descriptors
 from .bof import knn_histogram, soft_bof
 
 
@@ -28,7 +28,7 @@ class GEMolSG:
         bof_mode: str = "knn",            # 'knn' | 'soft'
         bof_knn: int = 3,
         bof_tau: Optional[float] = None,
-        sample_n_per_mol: Optional[int] = None,
+        sample_n_per_mol: Optional[int] = None,   # None = retain all vertices
         random_state: int = 42,
         n_jobs: int = 1,
         progress: bool = False,
@@ -68,7 +68,9 @@ class GEMolSG:
         """
         if descriptors is None:
             descriptors = self.descriptors(sample_surfaces)
-        pool = sample_descriptor_pool(descriptors, n_per_mol=self.sample_n_per_mol)
+        if self.sample_n_per_mol is not None:
+            descriptors = subsample_descriptors(descriptors, self.sample_n_per_mol)
+        pool = sample_descriptor_pool(descriptors)
         self.codebook_ = build_codebook(
             pool, self.n_codewords, random_state=self.random_state
         )

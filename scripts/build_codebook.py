@@ -8,7 +8,8 @@ saves it as a ``.npy`` array.
 Example
 -------
     python scripts/build_codebook.py surfaces/ codebook.npy \
-        --n-codewords 1000 --sample-per-mol 200 --n-jobs -1
+        --n-codewords 1000 --n-jobs -1            # retain all vertices (default)
+        --n-codewords 1000 --sample-per-mol 200    # optional: subsample per molecule
 """
 from __future__ import annotations
 
@@ -23,6 +24,7 @@ from ge_molsg import (
     compute_wks_batch,
     load_surface_npy,
     sample_descriptor_pool,
+    subsample_descriptors,
 )
 
 
@@ -31,7 +33,8 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("input_dir", type=Path, help="Directory of .npy surfaces.")
     parser.add_argument("output", type=Path, help="Output codebook .npy path.")
     parser.add_argument("--n-codewords", type=int, default=1000)
-    parser.add_argument("--sample-per-mol", type=int, default=None)
+    parser.add_argument("--sample-per-mol", type=int, default=None,
+                        help="Vertices kept per molecule. Default: retain all.")
     parser.add_argument("--n-neighbors", type=int, default=100)
     parser.add_argument("--n-components", type=int, default=100)
     parser.add_argument("--evals", type=int, default=50)
@@ -57,7 +60,9 @@ def main() -> None:
     descriptors = compute_wks_batch(
         surfaces, config, n_jobs=args.n_jobs, progress=True
     )
-    pool = sample_descriptor_pool(descriptors, n_per_mol=args.sample_per_mol)
+    if args.sample_per_mol is not None:
+        descriptors = subsample_descriptors(descriptors, args.sample_per_mol)
+    pool = sample_descriptor_pool(descriptors)
     codebook = build_codebook(
         pool, n_codewords=args.n_codewords, random_state=args.random_state
     )

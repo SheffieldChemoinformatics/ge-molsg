@@ -62,7 +62,7 @@ class MolSurface:
 
         This is the point set the affinity graph is built on. ESP is scaled by
         ``elec_weight`` so its spread is commensurate with the spatial
-        coordinates before the (Euclidean) neighbor search.
+        coordinates before the (Euclidean) neighbour search.
         """
         col = (self.esp * elec_weight).reshape(-1, 1)
         return np.concatenate([self.vertices, col], axis=1)
