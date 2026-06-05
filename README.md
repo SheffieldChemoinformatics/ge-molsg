@@ -1,6 +1,6 @@
 # GE-MolSG
 
-[Overview Workflow Image Placeholder]
+![image](https://github.com/SheffieldChemoinformatics/ge-molsg/blob/main/assets/ge_mol_sg_workflow.png?raw=true)
 
 Spectral geometry descriptors encoded via graph-Laplacian approximation and
 [Wave Kernel Signature](http://imagine.enpc.fr/~aubrym/projects/wks/index.html) (WKS).
