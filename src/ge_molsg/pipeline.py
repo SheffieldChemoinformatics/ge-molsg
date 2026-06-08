@@ -14,7 +14,7 @@ import numpy as np
 
 from .surface import MolSurface
 from .descriptor import GEMolSGConfig, compute_wks, compute_wks_batch
-from .codebook import build_codebook, build_descriptor_pool, sample_descriptor_pool
+from .codebook import build_codebook, build_descriptor_pool, sample_descriptors
 from .bof import hq_bof, knn_bof, soft_bof
 
 
@@ -69,7 +69,7 @@ class GEMolSG:
         if descriptors is None:
             descriptors = self.descriptors(sample_surfaces)
         if self.sample_n_per_mol is not None:
-            descriptors = sample_descriptor_pool(descriptors, self.sample_n_per_mol)
+            descriptors = sample_descriptors(descriptors, self.sample_n_per_mol)
         pool = build_descriptor_pool(descriptors)
         self.codebook_ = build_codebook(
             pool, self.n_codewords, random_state=self.random_state

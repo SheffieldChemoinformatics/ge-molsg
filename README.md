@@ -58,6 +58,8 @@ bash scripts/install_esp_surface_generator.sh
 ```
 
 ```bash
+# Ensure that you're environment is correctly configured to run Node JS
+# We're using Node 17 here. `nvm use 17`
 python scripts/smiles_to_surface_npy.py --smiles "CC(=O)Nc1ccc(O)cc1" --out mol.npy
 >>> Processing SMILES: CC(=O)Nc1ccc(O)cc1
 Saved surface to mol.npy  (3988 vertices, 7972 faces)

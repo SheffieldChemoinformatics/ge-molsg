@@ -13,7 +13,7 @@ from ge_molsg import (
     knn_histogram,
     load_surface_npy,
     build_descriptor_pool,
-    sample_descriptor_pool,
+    sample_descriptors,
 )
 
 
@@ -49,7 +49,7 @@ def _cmd_codebook(args: argparse.Namespace) -> None:
         surfaces, _config(args), n_jobs=args.n_jobs, progress=True
     )
     if args.sample_per_mol is not None:
-        descriptors = sample_descriptor_pool(descriptors, args.sample_per_mol)
+        descriptors = sample_descriptors(descriptors, args.sample_per_mol)
     pool = build_descriptor_pool(descriptors)
     codebook = build_codebook(pool, n_codewords=args.n_codewords)
     np.save(args.output, codebook)

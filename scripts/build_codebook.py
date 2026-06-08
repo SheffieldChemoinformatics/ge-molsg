@@ -22,7 +22,7 @@ from ge_molsg import (
     build_codebook,
     compute_wks_batch,
     load_surface_npy,
-    sample_descriptor_pool,
+    sample_descriptors,
 )
 
 
@@ -57,7 +57,7 @@ def main() -> None:
     descriptors = compute_wks_batch(
         surfaces, config, n_jobs=args.n_jobs, progress=True
     )
-    pool = sample_descriptor_pool(descriptors, n_per_mol=args.sample_per_mol)
+    pool = sample_descriptors(descriptors, n_per_mol=args.sample_per_mol)
     codebook = build_codebook(
         pool, n_codewords=args.n_codewords, random_state=args.random_state
     )

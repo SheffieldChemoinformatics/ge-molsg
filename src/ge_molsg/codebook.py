@@ -3,7 +3,7 @@
 A codebook is a set of ``n_codewords`` cluster centres in WKS descriptor
 space, fit with MiniBatchKMeans over per-vertex descriptors pooled across a
 set of molecules. ``build_descriptor_pool`` pools all vertices. To reduce the
-pool size, optionally pass the descriptors through ``sample_descriptor_pool``
+pool size, optionally pass the descriptors through ``sample_descriptors``
 first, which farthest-point-subsamples each molecule.
 """
 
@@ -41,7 +41,7 @@ def build_descriptor_pool(descriptor_list: Sequence[np.ndarray]) -> np.ndarray:
     """Pool per-vertex descriptors across molecules into one array.
 
     Retains every vertex of every molecule. To reduce the pool size, pass the
-    descriptors through :func:`sample_descriptor_pool` before pooling.
+    descriptors through :func:`sample_descriptors` before pooling.
 
     Parameters
     ----------
@@ -56,7 +56,7 @@ def build_descriptor_pool(descriptor_list: Sequence[np.ndarray]) -> np.ndarray:
     return np.vstack(list(descriptor_list))
 
 
-def sample_descriptor_pool(
+def sample_descriptors(
     descriptor_list: Sequence[np.ndarray], n_per_mol: int
 ) -> List[np.ndarray]:
     """Farthest-point-subsample each molecule to at most ``n_per_mol`` vertices.

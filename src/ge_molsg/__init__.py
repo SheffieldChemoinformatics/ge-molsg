@@ -35,7 +35,7 @@ from ge_molsg.descriptor import (
 from ge_molsg.codebook import (
     build_codebook,
     build_descriptor_pool,
-    sample_descriptor_pool,
+    sample_descriptors,
     farthest_point_sample,
 )
 from .bof import hq_bof, knn_bof, soft_bof, knn_histogram, hard_knn_bof
@@ -74,7 +74,7 @@ __all__ = [
     # codebook
     "build_codebook",
     "build_descriptor_pool",
-    "sample_descriptor_pool",
+    "sample_descriptors",
     "farthest_point_sample",
     # bof
     "hq_bof",
