@@ -12,4 +12,4 @@ class SurfaceError(GEMolSGError):
 
 
 class BackendError(GEMolSGError):
-    """Raised when a neighbor backend cannot be resolved or executed."""
+    """Raised when a neighbour backend cannot be resolved or executed."""

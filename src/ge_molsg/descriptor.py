@@ -43,7 +43,7 @@ class GEMolSGConfig:
     symmetrize: bool = True
     laplacian_type: str = "normalized"  # 'normalized' | 'unnormalized' | 'random_walk'.
 
-    # Neighbor backend
+    # Neighbour backend
     backend: str = "ckdtree"
     backend_kwargs: dict = field(default_factory=dict)
 
