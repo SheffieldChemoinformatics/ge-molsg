@@ -108,7 +108,7 @@ per-vertex descriptors into fixed-length per-molecule vectors, fit a codebook
 and encode against it:
 
 ```python
-pool = gm.sample_descriptor_pool(descriptors, n_per_mol=1500)
+pool = gm.build_descriptor_pool(descriptors)
 codebook = gm.build_codebook(pool, n_codewords=1024)
 vector = gm.knn_histogram(descriptor, codebook, knn=3)
 ```
