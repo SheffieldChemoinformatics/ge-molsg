@@ -8,7 +8,7 @@ from ge_molsg import (
     farthest_point_sample,
     knn_histogram,
     build_descriptor_pool,
-    sample_descriptors,
+    sample_descriptor_pool,
     soft_bof,
 )
 from tests.store import surface_batch
@@ -30,7 +30,7 @@ def test_sample_pool_keeps_all_vertices_by_default():
 def test_sample_pool_subsamples_per_molecule():
     """With n_per_mol the pool is capped per molecule."""
     descs = _descriptors(count=3, n=120)
-    sampled_desc = sample_descriptors(descs, n_per_mol=40)
+    sampled_desc = sample_descriptor_pool(descs, n_per_mol=40)
     pool = build_descriptor_pool(sampled_desc)
     assert pool.shape[0] == 3 * 40
 
@@ -45,7 +45,7 @@ def test_farthest_point_sample_returns_unique_indices():
 
 def test_build_codebook_shape():
     """The codebook has n_codewords rows in descriptor space."""
-    sampled_desc = sample_descriptors(_descriptors(count=3, n=100), n_per_mol=50)
+    sampled_desc = sample_descriptor_pool(_descriptors(count=3, n=100), n_per_mol=50)
     pool = build_descriptor_pool(sampled_desc)
     codebook = build_codebook(pool, n_codewords=24)
     assert codebook.shape == (24, pool.shape[1])
@@ -54,7 +54,7 @@ def test_build_codebook_shape():
 def test_knn_histogram_is_normalized():
     """The k-NN BoF histogram sums to one."""
     descs = _descriptors(count=3, n=100)
-    sampled_desc = sample_descriptors(descs, n_per_mol=50)
+    sampled_desc = sample_descriptor_pool(descs, n_per_mol=50)
     pool = build_descriptor_pool(sampled_desc)
     codebook = build_codebook(pool, n_codewords=20)
     hist = knn_histogram(descs[0], codebook, knn=3)
@@ -65,7 +65,7 @@ def test_knn_histogram_is_normalized():
 def test_soft_bof_is_normalized():
     """The soft BoF histogram sums to one."""
     descs = _descriptors(count=3, n=100)
-    sampled_desc = sample_descriptors(descs, n_per_mol=50)
+    sampled_desc = sample_descriptor_pool(descs, n_per_mol=50)
     pool = build_descriptor_pool(sampled_desc)
     codebook = build_codebook(pool, n_codewords=20)
     hist = soft_bof(descs[0], codebook, tau=0.1)

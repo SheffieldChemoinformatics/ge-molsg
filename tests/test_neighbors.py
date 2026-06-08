@@ -7,22 +7,24 @@ from ge_molsg.exception import BackendError
 from tests.store import sphere_surface
 
 
-def test_ckdtree_backend_shapes_and_self_exclusion():
-    """The default cKDTree backend returns k neighbors and excludes self."""
+def test_ckdtree_backend_shapes_and_self_inclusion():
+    """The default cKDTree backend returns k neighbors with the self-match first."""
     points = sphere_surface(n=60).augmented_points()
     idx, dist = make_ckdtree_backend()(points, k=10)
     assert idx.shape == (60, 10)
     assert dist.shape == (60, 10)
-    assert not np.any(idx == np.arange(60)[:, None])
+    assert np.array_equal(idx[:, 0], np.arange(60))
+    assert np.allclose(dist[:, 0], 0.0)
 
 
-def test_sklearn_backend_shapes_and_self_exclusion():
-    """The sklearn backend returns k neighbors and excludes self-matches."""
+def test_sklearn_backend_shapes_and_self_inclusion():
+    """The sklearn backend returns k neighbors with the self-match first."""
     points = sphere_surface(n=60).augmented_points()
     idx, dist = make_sklearn_backend()(points, k=10)
     assert idx.shape == (60, 10)
     assert dist.shape == (60, 10)
-    assert not np.any(idx == np.arange(60)[:, None])
+    assert np.array_equal(idx[:, 0], np.arange(60))
+    assert np.allclose(dist[:, 0], 0.0)
 
 
 def test_exact_backends_agree():
