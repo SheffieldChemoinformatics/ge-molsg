@@ -71,7 +71,7 @@ def wks_descriptor(
     Tau = np.exp(-((E - log_E) ** 2) / (2 * sigma ** 2))  # (evals, K)
     WKS = np.tensordot(Tau, phi_squared, (1, 1)).T   # (N, evals)
 
-    # Per-energy normalization (sum of Gaussian weights).
+    # Per-energy normalisation (sum of Gaussian weights).
     C = (
         np.exp(
             -((np.tile(e, (lam.shape[0], 1)) - np.tile(log_E, (evals, 1)).T) ** 2)
