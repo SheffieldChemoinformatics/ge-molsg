@@ -11,7 +11,7 @@ The symmetric normalised Laplacian follows Chung, *Spectral Graph Theory*
 (AMS, 1997), and the per-point adaptive bandwidth follows the self-tuning
 approach of Zelnik-Manor & Perona, "Self-Tuning Spectral Clustering"
 (NeurIPS, 2004). The adaptive-bandwidth affinity and normalised-Laplacian
-formulation was inspired by TopOMetry (Sidarta-Oliveira et al.).
+formulation was inspired by TopOMetry (https://github.com/davisidarta/topometry, Sidarta-Oliveira et al., 2022).
 """
 
 from __future__ import annotations
