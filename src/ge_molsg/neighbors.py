@@ -17,7 +17,7 @@ from .exception import BackendError
 
 
 class NeighborBackend(Protocol):
-    """Callable returning ``(indices, distances)`` with self in column 0 (dist=0)."""
+    """Callable returning ``(indices, distances)`` for the k nearest neighbours, excluding self."""
 
     def __call__(
         self, points: np.ndarray, k: int
@@ -38,9 +38,9 @@ def make_ckdtree_backend(workers: int = -1) -> NeighborBackend:
         from scipy.spatial import cKDTree
 
         tree = cKDTree(points)
-        dist, idx = tree.query(points, k=k, workers=workers)
-        # k columns total: self-match in col 0 (dist 0) + (k-1) real neighbours,
-        return idx, dist
+        dist, idx = tree.query(points, k=k + 1, workers=workers)
+        # drop col 0 (self-match, dist=0); return the k true neighbours
+        return idx[:, 1:], dist[:, 1:]
 
     return _backend
 
@@ -60,12 +60,12 @@ def make_sklearn_backend(algorithm: str = "auto", n_jobs: int = 1) -> NeighborBa
         from sklearn.neighbors import NearestNeighbors
 
         nn = NearestNeighbors(
-            n_neighbors=k, algorithm=algorithm, metric="euclidean", n_jobs=n_jobs
+            n_neighbors=k + 1, algorithm=algorithm, metric="euclidean", n_jobs=n_jobs
         )
         nn.fit(points)
         dist, idx = nn.kneighbors(points)
-        # k columns total: self-match in col 0 (dist 0) + (k-1) real neighbours,
-        return idx, dist
+        # drop col 0 (self-match, dist=0); return the k true neighbours
+        return idx[:, 1:], dist[:, 1:]
 
     return _backend
 
