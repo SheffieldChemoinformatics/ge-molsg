@@ -3,7 +3,7 @@
 :class:`GEMolSG` composes the free functions in this package, holding a config
 and a fitted codebook so they need not be passed repeatedly. It is entirely
 optional: every stage it calls (``compute_wks``, ``compute_wks_batch``,
-``build_codebook``, ``knn_histogram``) can be used directly.
+``build_codebook``, ``hq_bof``, ``knn_bof``, ``soft_bof``) can be used directly.
 """
 
 from __future__ import annotations
@@ -14,8 +14,8 @@ import numpy as np
 
 from .surface import MolSurface
 from .descriptor import GEMolSGConfig, compute_wks, compute_wks_batch
-from .codebook import build_codebook, sample_descriptor_pool
-from .bof import knn_histogram, soft_bof
+from .codebook import build_codebook, build_descriptor_pool, sample_descriptors
+from .bof import hq_bof, knn_bof, soft_bof
 
 
 class GEMolSG:
@@ -25,10 +25,10 @@ class GEMolSG:
         self,
         config: Optional[GEMolSGConfig] = None,
         n_codewords: int = 1000,
-        bof_mode: str = "knn",            # 'knn' | 'soft'
+        bof_mode: str = "knn_bof",         # 'hq' | 'knn_bof' | 'soft'
         bof_knn: int = 3,
         bof_tau: Optional[float] = None,
-        sample_n_per_mol: Optional[int] = None,
+        sample_n_per_mol: Optional[int] = None,   # None = retain all vertices
         random_state: int = 42,
         n_jobs: int = 1,
         progress: bool = False,
@@ -68,7 +68,9 @@ class GEMolSG:
         """
         if descriptors is None:
             descriptors = self.descriptors(sample_surfaces)
-        pool = sample_descriptor_pool(descriptors, n_per_mol=self.sample_n_per_mol)
+        if self.sample_n_per_mol is not None:
+            descriptors = sample_descriptors(descriptors, self.sample_n_per_mol)
+        pool = build_descriptor_pool(descriptors)
         self.codebook_ = build_codebook(
             pool, self.n_codewords, random_state=self.random_state
         )
@@ -78,13 +80,17 @@ class GEMolSG:
     def _aggregate(self, per_vertex: np.ndarray) -> np.ndarray:
         if self.codebook_ is None:
             raise RuntimeError("Call fit_codebook(...) before transform(...).")
-        if self.bof_mode == "knn":
-            return knn_histogram(per_vertex, self.codebook_, knn=self.bof_knn)
+        if self.bof_mode == "hq":
+            return hq_bof(per_vertex, self.codebook_)
+        if self.bof_mode == "knn_bof":
+            return knn_bof(per_vertex, self.codebook_, knn=self.bof_knn)
         if self.bof_mode == "soft":
             if self.bof_tau is None:
                 raise ValueError("bof_mode='soft' requires bof_tau.")
             return soft_bof(per_vertex, self.codebook_, self.bof_tau)
-        raise ValueError(f"Unknown bof_mode '{self.bof_mode}'")
+        raise ValueError(
+            f"Unknown bof_mode '{self.bof_mode}'. Choose from 'hq', 'knn_bof', 'soft'."
+        )
 
     def transform(self, surface: MolSurface) -> np.ndarray:
         """One surface to a fixed-length Bag-of-Features vector."""

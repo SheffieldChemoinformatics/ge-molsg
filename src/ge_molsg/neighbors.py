@@ -1,7 +1,6 @@
-"""Pluggable Euclidean k-nearest-neighbor backends.
+"""Pluggable Euclidean k-nearest-neighbour backends.
 
-Each backend maps ``(points, k) -> (indices, distances)`` with self-matches
-removed, so graph construction is independent of the search implementation. The
+Each backend maps ``(points, k) -> (indices, distances)`` The
 default backend is SciPy's ``cKDTree``, which is fast and exact for the
 low-dimensional augmented point clouds used here; scikit-learn's
 ``NearestNeighbors`` is also available. Additional backends can be registered
@@ -18,16 +17,12 @@ from .exception import BackendError
 
 
 class NeighborBackend(Protocol):
-    """Callable returning ``(indices, distances)`` with self-matches excluded."""
+    """Callable returning ``(indices, distances)`` with self in column 0 (dist=0)."""
 
     def __call__(
         self, points: np.ndarray, k: int
     ) -> Tuple[np.ndarray, np.ndarray]: ...
 
-
-def _strip_self(idx: np.ndarray, dist: np.ndarray):
-    """Drop the self-match (column 0 when a point set is queried on itself)."""
-    return idx[:, 1:], dist[:, 1:]
 
 
 def make_ckdtree_backend(workers: int = -1) -> NeighborBackend:
@@ -43,8 +38,9 @@ def make_ckdtree_backend(workers: int = -1) -> NeighborBackend:
         from scipy.spatial import cKDTree
 
         tree = cKDTree(points)
-        dist, idx = tree.query(points, k=k + 1, workers=workers)
-        return _strip_self(idx, dist)
+        dist, idx = tree.query(points, k=k, workers=workers)
+        # k columns total: self-match in col 0 (dist 0) + (k-1) real neighbours,
+        return idx, dist
 
     return _backend
 
@@ -57,18 +53,19 @@ def make_sklearn_backend(algorithm: str = "auto", n_jobs: int = 1) -> NeighborBa
     algorithm : {'auto', 'ball_tree', 'kd_tree', 'brute'}, default 'auto'
         Search algorithm passed to ``sklearn.neighbors.NearestNeighbors``.
     n_jobs : int, default 1
-        Worker threads for the neighbor query.
+        Worker threads for the neighbour query.
     """
 
     def _backend(points: np.ndarray, k: int):
         from sklearn.neighbors import NearestNeighbors
 
         nn = NearestNeighbors(
-            n_neighbors=k + 1, algorithm=algorithm, metric="euclidean", n_jobs=n_jobs
+            n_neighbors=k, algorithm=algorithm, metric="euclidean", n_jobs=n_jobs
         )
         nn.fit(points)
         dist, idx = nn.kneighbors(points)
-        return _strip_self(idx, dist)
+        # k columns total: self-match in col 0 (dist 0) + (k-1) real neighbours,
+        return idx, dist
 
     return _backend
 

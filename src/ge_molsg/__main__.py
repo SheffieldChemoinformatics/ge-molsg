@@ -12,7 +12,8 @@ from ge_molsg import (
     compute_wks_batch,
     knn_histogram,
     load_surface_npy,
-    sample_descriptor_pool,
+    build_descriptor_pool,
+    sample_descriptors,
 )
 
 
@@ -47,7 +48,9 @@ def _cmd_codebook(args: argparse.Namespace) -> None:
     descriptors = compute_wks_batch(
         surfaces, _config(args), n_jobs=args.n_jobs, progress=True
     )
-    pool = sample_descriptor_pool(descriptors, n_per_mol=args.sample_per_mol)
+    if args.sample_per_mol is not None:
+        descriptors = sample_descriptors(descriptors, args.sample_per_mol)
+    pool = build_descriptor_pool(descriptors)
     codebook = build_codebook(pool, n_codewords=args.n_codewords)
     np.save(args.output, codebook)
     print(f"Saved codebook {codebook.shape} to {args.output}")
@@ -87,7 +90,8 @@ def build_parser() -> argparse.ArgumentParser:
     p_cb.add_argument("input_dir", type=Path)
     p_cb.add_argument("output", type=Path)
     p_cb.add_argument("--n-codewords", type=int, default=1000)
-    p_cb.add_argument("--sample-per-mol", type=int, default=None)
+    p_cb.add_argument("--sample-per-mol", type=int, default=None,
+                      help="Vertices kept per molecule. Default: retain all.")
     _add_common(p_cb)
     p_cb.set_defaults(func=_cmd_codebook)
 

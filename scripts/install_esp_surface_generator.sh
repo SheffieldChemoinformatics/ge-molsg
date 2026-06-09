@@ -10,10 +10,17 @@ cd "$REPO_ROOT"
 # --------------------------------------------------------------------------
 # 1. Check node is available and meets the minimum version requirement
 # --------------------------------------------------------------------------
-if ! command -v node &>/dev/null; then
-    echo "ERROR: 'node' not found on PATH."
-    echo "Install Node.js v16 or v17 via nvm:"
-    echo "  nvm install 17 && nvm use 17"
+if ! node --version &>/dev/null; then
+    NODE_ERR=$(node --version 2>&1 || true)
+    if command -v node &>/dev/null; then
+        echo "ERROR: 'node' found at $(command -v node) but failed to execute:"
+        echo "  $NODE_ERR"
+        echo "The installed Node.js binary is likely incompatible with this system's glibc."
+    else
+        echo "ERROR: 'node' not found on PATH."
+    fi
+    echo "Install a compatible Node.js version via nvm:"
+    echo "  \`nvm install 17 && nvm use 17\`"
     exit 1
 fi
 

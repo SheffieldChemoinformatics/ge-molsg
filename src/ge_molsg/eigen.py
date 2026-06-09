@@ -41,7 +41,7 @@ def compute_eigenpairs(
     drop_first : bool, default True
         Discard the trivial smallest pair before returning.
     normalize_vectors : bool, default True
-        L2-normalize each eigenvector column.
+        L2-normalise each eigenvector column.
     eigensolver : {'arpack', 'lobpcg', 'dense'}, default 'arpack'
         Backend solver. 'arpack' is the default; 'dense' is exact
         but only suitable for small matrices.
