@@ -688,6 +688,12 @@ wheels = [
 ]
 
 [[package]]
+name = "espsim"
+version = "0.0.1"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/3d/ab/608c2a3cc1e409ed720529e67d62a9628d6068a95f4e964da583e3d9f8ea/espsim-0.0.1.tar.gz", hash = "sha256:0b4438b4a3c8fe57c69dff9cb5e6e4044e9d376078133a79a01c1bbb3d689443", size = 19765098, upload-time = "2022-03-26T09:51:14.82Z" }
+
+[[package]]
 name = "exceptiongroup"
 version = "1.3.1"
 source = { registry = "https://pypi.org/simple" }
@@ -869,10 +875,13 @@ dev = [
     { name = "pytest", version = "9.0.3", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.10'" },
 ]
 experiments = [
+    { name = "espsim" },
     { name = "ipykernel", version = "6.31.0", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.10'" },
     { name = "ipykernel", version = "7.2.0", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.10'" },
     { name = "matplotlib", version = "3.9.4", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.10'" },
     { name = "matplotlib", version = "3.10.9", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.10'" },
+    { name = "openbabel", version = "3.1.1.1", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.10'" },
+    { name = "openbabel", version = "3.2.0", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.10'" },
     { name = "pandas", version = "2.3.3", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.11' or python_full_version >= '3.14'" },
     { name = "pandas", version = "3.0.3", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.11' and python_full_version < '3.14'" },
 ]
@@ -883,9 +892,11 @@ progress = [
 [package.metadata]
 requires-dist = [
     { name = "coverage", extras = ["toml"], marker = "extra == 'dev'", specifier = ">=7.4" },
+    { name = "espsim", marker = "extra == 'experiments'" },
     { name = "ipykernel", marker = "extra == 'experiments'" },
     { name = "matplotlib", marker = "extra == 'experiments'" },
     { name = "numpy", specifier = "<2" },
+    { name = "openbabel", marker = "extra == 'experiments'" },
     { name = "pandas", marker = "extra == 'experiments'" },
     { name = "pytest", marker = "extra == 'dev'", specifier = ">=8.0" },
     { name = "rdkit", specifier = "<2024" },
@@ -1799,6 +1810,60 @@ wheels = [
     { url = "https://files.pythonhosted.org/packages/3f/72/3df6c1c06fc83d9cfe381cccb4be2532bbd38bf93fbc9fad087b6687f1c0/numpy-1.26.4-pp39-pypy39_pp73-macosx_10_9_x86_64.whl", hash = "sha256:afedb719a9dcfc7eaf2287b839d8198e06dcd4cb5d276a3df279231138e83d30", size = 20455961, upload-time = "2024-02-06T00:03:05.993Z" },
     { url = "https://files.pythonhosted.org/packages/8e/02/570545bac308b58ffb21adda0f4e220ba716fb658a63c151daecc3293350/numpy-1.26.4-pp39-pypy39_pp73-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:95a7476c59002f2f6c590b9b7b998306fba6a5aa646b1e22ddfeaf8f78c3a29c", size = 18061071, upload-time = "2024-02-06T00:03:41.5Z" },
     { url = "https://files.pythonhosted.org/packages/f4/5f/fafd8c51235f60d49f7a88e2275e13971e90555b67da52dd6416caec32fe/numpy-1.26.4-pp39-pypy39_pp73-win_amd64.whl", hash = "sha256:7e50d0a0cc3189f9cb0aeb3a6a6af18c16f59f004b866cd2be1c14b36134a4a0", size = 15709730, upload-time = "2024-02-06T00:04:11.719Z" },
+]
+
+[[package]]
+name = "openbabel"
+version = "3.1.1.1"
+source = { registry = "https://pypi.org/simple" }
+resolution-markers = [
+    "python_full_version < '3.10'",
+]
+sdist = { url = "https://files.pythonhosted.org/packages/9d/3f/f08f5d1422d74ed0e1e612870b343bfcc26313bdf9efec9165c3ea4b3ae2/openbabel-3.1.1.1.tar.gz", hash = "sha256:bb7f8cad15f3a208f4869d7943cbb14eb7125372eba397588f207f8d19e78373", size = 82811, upload-time = "2020-05-23T09:33:22.782Z" }
+
+[[package]]
+name = "openbabel"
+version = "3.2.0"
+source = { registry = "https://pypi.org/simple" }
+resolution-markers = [
+    "python_full_version >= '3.14' and sys_platform == 'win32'",
+    "python_full_version >= '3.14' and sys_platform == 'emscripten'",
+    "python_full_version >= '3.14' and sys_platform != 'emscripten' and sys_platform != 'win32'",
+    "python_full_version >= '3.12' and python_full_version < '3.14' and sys_platform == 'win32'",
+    "python_full_version >= '3.12' and python_full_version < '3.14' and sys_platform == 'emscripten'",
+    "python_full_version >= '3.12' and python_full_version < '3.14' and sys_platform != 'emscripten' and sys_platform != 'win32'",
+    "python_full_version == '3.11.*' and sys_platform == 'win32'",
+    "python_full_version == '3.11.*' and sys_platform == 'emscripten'",
+    "python_full_version == '3.11.*' and sys_platform != 'emscripten' and sys_platform != 'win32'",
+    "python_full_version == '3.10.*'",
+]
+sdist = { url = "https://files.pythonhosted.org/packages/29/67/7e1c86fa3a932bba8d8c9dcef040687f1bce1f2903a29acd4fb5337bbea8/openbabel-3.2.0.tar.gz", hash = "sha256:332e6038146e0b69f9c32b8d71d6de153a095d98dce4663972c4a45e55449d01", size = 36460954, upload-time = "2026-05-26T20:39:25.519Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/d1/b3/e9dc0030d2a2a94fdb25431dd5c41ae30e03dd87c1ca58560355f6ce470b/openbabel-3.2.0-cp310-cp310-macosx_10_9_x86_64.whl", hash = "sha256:e3a0a41121cab6d5046bbc6110b41b3143b49fb266287174b1d7c0f4806f3c9b", size = 11067150, upload-time = "2026-05-26T20:38:26.812Z" },
+    { url = "https://files.pythonhosted.org/packages/e2/8f/a911c328730031b24a12cbc77287f7585dc9d06488d42be39510fe6a2836/openbabel-3.2.0-cp310-cp310-macosx_11_0_arm64.whl", hash = "sha256:8569419eb98eb27064d97f683c7329a67e3f377b98e8b39c2fce075cdf402106", size = 10557258, upload-time = "2026-05-26T20:38:29.508Z" },
+    { url = "https://files.pythonhosted.org/packages/3a/0a/ab1e985a6ea0a977c347d7db20ced293f1fc30dcfa250e6ceb66997bbef5/openbabel-3.2.0-cp310-cp310-manylinux2014_aarch64.manylinux_2_17_aarch64.whl", hash = "sha256:2ee0f76f08de25dc6cbb4002245f60a41d83e15d6c167273935f5a51adbb26d3", size = 12081494, upload-time = "2026-05-26T20:38:31.737Z" },
+    { url = "https://files.pythonhosted.org/packages/d0/3d/859beb1f4ce3529f90cc1864710c30602fd9c1ea6c57684671f9ee34c076/openbabel-3.2.0-cp310-cp310-manylinux2014_x86_64.manylinux_2_17_x86_64.whl", hash = "sha256:c9bb90387baec8ee53cb58f2862bcdb380376a10e00bc165d089ab7131de08ab", size = 12652095, upload-time = "2026-05-26T20:38:35.159Z" },
+    { url = "https://files.pythonhosted.org/packages/d9/05/3c1bbcf2045d57b360fc3cf56fb7425c69db6a8d6a444ca40435354e2b5b/openbabel-3.2.0-cp310-cp310-win_amd64.whl", hash = "sha256:88c93643016bbc35a19280b4cfe898d537393e135eac4e33551a8244fdaa99dc", size = 5512086, upload-time = "2026-05-26T20:38:37.684Z" },
+    { url = "https://files.pythonhosted.org/packages/d2/8b/f408f4aef903125216f79ac9fd2a785d3bd6385c7749612cdb144ff1ee02/openbabel-3.2.0-cp311-cp311-macosx_10_9_x86_64.whl", hash = "sha256:955eb6a3b2eb9d8a8333addfe9f1ca23bad6b9583ec299a7cdd7b82c9520aaf1", size = 11067148, upload-time = "2026-05-26T20:38:39.652Z" },
+    { url = "https://files.pythonhosted.org/packages/78/08/87ab319cc3a0cdc7538c52e3185704c0632f179f6b2b44c01a4d91e0cda4/openbabel-3.2.0-cp311-cp311-macosx_11_0_arm64.whl", hash = "sha256:debaf9b2d215b63ae1202294ce79247f078de0ca6855b73fc5d620e477af8952", size = 10557264, upload-time = "2026-05-26T20:38:42.341Z" },
+    { url = "https://files.pythonhosted.org/packages/b1/5c/9cc27ba0090bb9581af40791cc9a06d9c75c5b432f48d21afc9452b6d8d4/openbabel-3.2.0-cp311-cp311-manylinux2014_aarch64.manylinux_2_17_aarch64.whl", hash = "sha256:53081f3a34041862c0b87f2f948df86bddfe62b6ead26e7e4503dfdbebe971fc", size = 12081687, upload-time = "2026-05-26T20:38:44.856Z" },
+    { url = "https://files.pythonhosted.org/packages/15/fe/3fc0c09a21d5cb8f79aab5fa96e08d95b1ba19d98bb0a9be57494ad6f718/openbabel-3.2.0-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.whl", hash = "sha256:b15890008b8de80b89ddc61f3a81d6f5d6752ef7a2e98c34774be9fedef165a3", size = 12652044, upload-time = "2026-05-26T20:38:47.197Z" },
+    { url = "https://files.pythonhosted.org/packages/fc/a3/8cb1685d607bd3d50175cc7378f128da1f4ca7dfa560499e68fbd69b5458/openbabel-3.2.0-cp311-cp311-win_amd64.whl", hash = "sha256:c9a89a4c31ba4956ad04943951c16c5075ac1a10083f0bbfb02184ff36056094", size = 5512190, upload-time = "2026-05-26T20:38:49.356Z" },
+    { url = "https://files.pythonhosted.org/packages/86/d4/9b17a1d582ef34af16cc72ce1dc7cf0ab91cce23a842c73f8fd47053e0ab/openbabel-3.2.0-cp312-cp312-macosx_10_13_x86_64.whl", hash = "sha256:2be89c56d1597e7e8e30e321dc7a885db76a6f42483dc4395f6a4e6aa87f49e7", size = 11004529, upload-time = "2026-05-26T20:38:51.141Z" },
+    { url = "https://files.pythonhosted.org/packages/eb/ab/7514a0bd68c7dbbc61213be057b788a416f63f3c2c121eace1a181095fac/openbabel-3.2.0-cp312-cp312-macosx_11_0_arm64.whl", hash = "sha256:df254b4c0c7ac6477e63710279726ea0b7f8bd55615c4b473a8524a4e943509b", size = 10560061, upload-time = "2026-05-26T20:38:53.784Z" },
+    { url = "https://files.pythonhosted.org/packages/8a/1b/e61fce03382321dbbf58009ec95e324ff972b4c1e86d2d4d2882b9f64048/openbabel-3.2.0-cp312-cp312-manylinux2014_aarch64.manylinux_2_17_aarch64.whl", hash = "sha256:832874d7d51ef33ee7fec7a4fd0a6cba9276d8485150a833d63e545aadece679", size = 12083566, upload-time = "2026-05-26T20:38:55.968Z" },
+    { url = "https://files.pythonhosted.org/packages/75/7d/da11e42f9c2c4f348054cf4bf48e6bb4b405aecf15b924e67449707fd788/openbabel-3.2.0-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.whl", hash = "sha256:2de3626cce6e2b6ea6e94f03e34827247fc09c4e2c80f58c6c3a1f7e7acafa9c", size = 12657522, upload-time = "2026-05-26T20:38:58.371Z" },
+    { url = "https://files.pythonhosted.org/packages/1d/f5/3a989d3f00b23cbd9886e92964570434876dabe69392402ecc64a4e65dfd/openbabel-3.2.0-cp312-cp312-win_amd64.whl", hash = "sha256:32971502bed2defb9fcc208fed0b25aa44d6bd39fb864cc0762a2ff0c2f085b9", size = 5511922, upload-time = "2026-05-26T20:39:00.521Z" },
+    { url = "https://files.pythonhosted.org/packages/45/7d/48eac4f07be0b8a651ad27cd2f0a679715e1c00aa28c54046f6e6801e74a/openbabel-3.2.0-cp313-cp313-macosx_10_13_x86_64.whl", hash = "sha256:3f33cccedc860aefdf04711658a8ee88a3eec8e1948d443942c8e4c0cd130c31", size = 11004130, upload-time = "2026-05-26T20:39:02.613Z" },
+    { url = "https://files.pythonhosted.org/packages/70/33/926f796c71055c58d53cb4d082c5ef2c3e66205e660143ce00ad4aae7c0e/openbabel-3.2.0-cp313-cp313-macosx_11_0_arm64.whl", hash = "sha256:f3e30937e1e0db15eaa4193449948601a646d736ff224c90f161bdcf153d9e20", size = 10559721, upload-time = "2026-05-26T20:39:05.027Z" },
+    { url = "https://files.pythonhosted.org/packages/c5/6f/155644a53a24d9b1ecc7596b042dd42f01fb03a4182ed38a0924c2692ea4/openbabel-3.2.0-cp313-cp313-manylinux2014_aarch64.manylinux_2_17_aarch64.whl", hash = "sha256:01011b444e2c2f34dddea2720608529b28c18b48e47da79bdd1f6f270d1664de", size = 12081300, upload-time = "2026-05-26T20:39:07.64Z" },
+    { url = "https://files.pythonhosted.org/packages/f6/a2/9ca362d4e6749c088acf7c6f6d537851be181cd0bd303b67a6365a9de1e2/openbabel-3.2.0-cp313-cp313-manylinux2014_x86_64.manylinux_2_17_x86_64.whl", hash = "sha256:7049c5d90b8941b75bf91d177d9b16cf19a52e72c75550184a7fbd5e5ea45660", size = 12653025, upload-time = "2026-05-26T20:39:09.892Z" },
+    { url = "https://files.pythonhosted.org/packages/4c/ce/7a4651eb32860bb3d47b056e508d69df600724899e79b0d57063aa14937c/openbabel-3.2.0-cp313-cp313-win_amd64.whl", hash = "sha256:c147a52d35aa566fe0c4f3481776678758028cd19a900250710f1d2eb6ae11b0", size = 5511715, upload-time = "2026-05-26T20:39:11.983Z" },
+    { url = "https://files.pythonhosted.org/packages/e5/bd/dc1484917ded358ca2be66972de9c010dbad02df6bbfc1f47e99404a5d08/openbabel-3.2.0-cp314-cp314-macosx_10_15_x86_64.whl", hash = "sha256:bb4b7d1d5244cce2fa3fce9bfcf5afafd960494b69d3b7417a3fb0988f1213d3", size = 11026017, upload-time = "2026-05-26T20:39:13.974Z" },
+    { url = "https://files.pythonhosted.org/packages/ac/5f/4322533ef75c841f03bf8a2f333a3c40d2340133b6e7f55ca0cd59a7f634/openbabel-3.2.0-cp314-cp314-macosx_11_0_arm64.whl", hash = "sha256:278e3c6ae79e8b2752a540cdc52a36b9dd956fcf811d18df5a663085ce77daff", size = 10559983, upload-time = "2026-05-26T20:39:16.177Z" },
+    { url = "https://files.pythonhosted.org/packages/3f/87/3cf7258f9af22f5d0985fbe63b1ce4b3635699b338e847f724c1d2127e5c/openbabel-3.2.0-cp314-cp314-manylinux2014_aarch64.manylinux_2_17_aarch64.whl", hash = "sha256:97b838e89ca6b2f563d6bcdf5d8a08974915e1006ad4aa5813262e35635b6c6f", size = 12082523, upload-time = "2026-05-26T20:39:18.426Z" },
+    { url = "https://files.pythonhosted.org/packages/07/40/fd97ad24f77b9c7bef6ba5d127f17d30008ea30ac494aa639b8aedfc6632/openbabel-3.2.0-cp314-cp314-manylinux2014_x86_64.manylinux_2_17_x86_64.whl", hash = "sha256:1ac9a735958d27cfa5811bd7b95a074d3f1b776afdff77e50b0cc7b531858a15", size = 12653161, upload-time = "2026-05-26T20:39:20.677Z" },
+    { url = "https://files.pythonhosted.org/packages/cf/16/27e8b0304948f9cbece9e0ec2c14326d6864127f411525112025d96fdc8c/openbabel-3.2.0-cp314-cp314-win_amd64.whl", hash = "sha256:73d016280ad3bc28b2b61df88c43a3a1bac69c8613429d23daee6d2b769312bc", size = 5649968, upload-time = "2026-05-26T20:39:22.596Z" },
 ]
 
 [[package]]

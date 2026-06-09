@@ -27,7 +27,7 @@ dependencies = [
 
 [project.optional-dependencies]
 progress = ["tqdm>=4.65"]
-experiments = ["pandas", "ipykernel", "matplotlib"]
+experiments = ["pandas", "ipykernel", "matplotlib", "openbabel", "espsim"]
 dev = [
     "pytest>=8.0",
     "coverage[toml]>=7.4",
