@@ -7,7 +7,7 @@ Loads every ``.npy`` surface in an input directory, computes its WKS descriptor
 Example
 -------
     python scripts/compute_descriptors.py surfaces/ descriptors/ \
-        --n-neighbors 100 --n-components 100 --evals 50 --n-jobs -1
+        --n-neighbours 100 --n-components 100 --evals 50 --n-jobs -1
 """
 from __future__ import annotations
 
