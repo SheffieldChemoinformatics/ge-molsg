@@ -35,6 +35,8 @@ htmlcov/
 # Generated data
 # -----------------------------------------------------------------------------
 *.npy
+**/dude_z_data
+**/experiments_out
 
 # Keep test fixtures under version control
 !tests/data/

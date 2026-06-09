@@ -181,6 +181,20 @@ vector = model.transform(surface)          # one surface  -> BoF vector
 matrix = model.transform_many(surfaces)    # many surfaces -> BoF matrix
 ```
 
+## Experiments
+
+Install the additional dependencies required to run the experiment notebooks:
+
+```bash
+uv sync --extra experiments
+```
+
+To reproduce our experiments, run the notebooks inside `/experiments`. 
+Note that some dependecies like `roshambo` and `oddt` cannot be run in recent 
+Python versions. Hence the reproducibility of some experiments requires the creation 
+of lower environment versions. We also recommend running the experiments in a cluster 
+due to long processign times of molecular surfaces.
+
 ## Configuration
 
 `GEMolSGConfig` collects the descriptor parameters:
