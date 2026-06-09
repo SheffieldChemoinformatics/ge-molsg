@@ -159,13 +159,13 @@ def compute_lb_fem(vertices, faces, k):
     localA = (1.0 / volumes) * (a0 * tA00 + a1 * tA11 - a0110 * tA0110)
 
     # Construct sparse matrix, flatten to ensure sparsity
-    # Cast as np.int to avoid errors in Python 3
+    # Cast as int to avoid errors in Python 3
     J_indices = np.einsum('ij,jk -> ijk',
                           faces,
-                          np.ones((3, 3))).flatten().astype(np.int)
+                          np.ones((3, 3))).flatten().astype(int)
     I_indices = np.einsum('ij,jk -> ikj',
                           faces,
-                          np.ones((3, 3))).flatten().astype(np.int)
+                          np.ones((3, 3))).flatten().astype(int)
     localA = localA.flatten()
     localB = localB.flatten()
     A = sparse.csr_matrix((localA, (I_indices, J_indices)))

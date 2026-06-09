@@ -58,6 +58,8 @@ bash scripts/install_esp_surface_generator.sh
 ```
 
 ```bash
+# Ensure that you're environment is correctly configured to run Node JS
+# We're using Node 17 here. `nvm use 17`
 python scripts/smiles_to_surface_npy.py --smiles "CC(=O)Nc1ccc(O)cc1" --out mol.npy
 >>> Processing SMILES: CC(=O)Nc1ccc(O)cc1
 Saved surface to mol.npy  (3988 vertices, 7972 faces)
@@ -178,6 +180,16 @@ model.fit_codebook(sample_surfaces)        # generates descriptors, then fits th
 vector = model.transform(surface)          # one surface  -> BoF vector
 matrix = model.transform_many(surfaces)    # many surfaces -> BoF matrix
 ```
+
+## Experiments
+
+Install the additional dependencies required to run the experiment notebooks:
+
+```bash
+uv sync --extra experiments
+```
+
+To reproduce our experiments, run the notebooks inside `/experiments`.
 
 ## Configuration
 
