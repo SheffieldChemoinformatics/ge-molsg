@@ -1,6 +1,6 @@
 # GE-MolSG
 
-[Overview Workflow Image Placeholder]
+![image](https://github.com/SheffieldChemoinformatics/ge-molsg/blob/main/assets/ge_mol_sg_workflow.png?raw=true)
 
 Spectral geometry descriptors encoded via graph-Laplacian approximation and
 [Wave Kernel Signature](http://imagine.enpc.fr/~aubrym/projects/wks/index.html) (WKS).
@@ -58,6 +58,8 @@ bash scripts/install_esp_surface_generator.sh
 ```
 
 ```bash
+# Ensure that you're environment is correctly configured to run Node JS
+# We're using Node 17 here. `nvm use 17`
 python scripts/smiles_to_surface_npy.py --smiles "CC(=O)Nc1ccc(O)cc1" --out mol.npy
 >>> Processing SMILES: CC(=O)Nc1ccc(O)cc1
 Saved surface to mol.npy  (3988 vertices, 7972 faces)
@@ -108,7 +110,7 @@ per-vertex descriptors into fixed-length per-molecule vectors, fit a codebook
 and encode against it:
 
 ```python
-pool = gm.sample_descriptor_pool(descriptors, n_per_mol=1500)
+pool = gm.build_descriptor_pool(descriptors)
 codebook = gm.build_codebook(pool, n_codewords=1024)
 vector = gm.knn_histogram(descriptor, codebook, knn=3)
 ```
@@ -178,6 +180,20 @@ model.fit_codebook(sample_surfaces)        # generates descriptors, then fits th
 vector = model.transform(surface)          # one surface  -> BoF vector
 matrix = model.transform_many(surfaces)    # many surfaces -> BoF matrix
 ```
+
+## Experiments
+
+Install the additional dependencies required to run the experiment notebooks:
+
+```bash
+uv sync --extra experiments
+```
+
+To reproduce our experiments, run the notebooks inside `/experiments`. 
+Note that some dependecies like `roshambo` and `oddt` cannot be run in recent 
+Python versions. Hence the reproducibility of some experiments requires the creation 
+of lower environment versions. We also recommend running the experiments in a cluster 
+due to long processign times of molecular surfaces.
 
 ## Configuration
 

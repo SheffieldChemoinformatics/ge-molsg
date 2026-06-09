@@ -12,8 +12,8 @@ from ge_molsg import (
     compute_wks_batch,
     knn_histogram,
     load_surface_npy,
-    sample_descriptor_pool,
-    subsample_descriptors,
+    build_descriptor_pool,
+    sample_descriptors,
 )
 
 
@@ -49,8 +49,8 @@ def _cmd_codebook(args: argparse.Namespace) -> None:
         surfaces, _config(args), n_jobs=args.n_jobs, progress=True
     )
     if args.sample_per_mol is not None:
-        descriptors = subsample_descriptors(descriptors, args.sample_per_mol)
-    pool = sample_descriptor_pool(descriptors)
+        descriptors = sample_descriptors(descriptors, args.sample_per_mol)
+    pool = build_descriptor_pool(descriptors)
     codebook = build_codebook(pool, n_codewords=args.n_codewords)
     np.save(args.output, codebook)
     print(f"Saved codebook {codebook.shape} to {args.output}")

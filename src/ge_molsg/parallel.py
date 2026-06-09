@@ -8,6 +8,7 @@ built on top of it. With ``n_jobs == 1`` it runs serially with no pool.
 
 from __future__ import annotations
 
+import multiprocessing
 from concurrent.futures import ProcessPoolExecutor, as_completed
 from typing import Callable, Iterable, List, Optional, TypeVar
 
@@ -74,7 +75,8 @@ def parallel_map(
             return results
 
         results = [None] * n
-        with ProcessPoolExecutor(max_workers=workers) as pool:
+        mp_context = multiprocessing.get_context("forkserver")
+        with ProcessPoolExecutor(max_workers=workers, mp_context=mp_context) as pool:
             futures = {pool.submit(func, item): i for i, item in enumerate(items)}
             for future in as_completed(futures):
                 idx = futures[future]

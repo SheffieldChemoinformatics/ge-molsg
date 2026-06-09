@@ -34,11 +34,11 @@ from ge_molsg.descriptor import (
 )
 from ge_molsg.codebook import (
     build_codebook,
-    sample_descriptor_pool,
-    subsample_descriptors,
+    build_descriptor_pool,
+    sample_descriptors,
     farthest_point_sample,
 )
-from ge_molsg.bof import knn_histogram, soft_bof
+from .bof import hq_bof, knn_bof, soft_bof, knn_histogram, hard_knn_bof
 from ge_molsg.parallel import parallel_map
 from ge_molsg.pipeline import GEMolSG
 from ge_molsg.patches import PatchDescriptor, PatchConfig, VALID_PATCH_FEATURES
@@ -73,11 +73,14 @@ __all__ = [
     "compute_wks_batch",
     # codebook
     "build_codebook",
-    "sample_descriptor_pool",
-    "subsample_descriptors",
+    "build_descriptor_pool",
+    "sample_descriptors",
     "farthest_point_sample",
     # bof
+    "hq_bof",
     "knn_histogram",
+    "hard_knn_bof",
+    "knn_bof",
     "soft_bof",
     # parallelism
     "parallel_map",
