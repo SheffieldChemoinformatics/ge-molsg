@@ -37,6 +37,7 @@ htmlcov/
 *.npy
 **/dude_z_data
 **/experiments_out
+codebooks/
 
 # Keep test fixtures under version control
 !tests/data/
@@ -51,3 +52,8 @@ htmlcov/
 # Local development dependencies
 # -----------------------------------------------------------------------------
 esp-surface-generator/
+
+# -----------------------------------------------------------------------------
+# VSCode settings
+# -----------------------------------------------------------------------------
+.vscode/
